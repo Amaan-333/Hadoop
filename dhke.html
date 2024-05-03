@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffie-Hellman Key Exchange</title>
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style> -->
+</head>
+<body>
+    <div class="container">
+        <h1>Diffie-Hellman Key Exchange</h1>
+        <div>
+            <label for="prime">Prime Number (P):</label>
+            <input type="number" id="prime" min="2">
+        </div>
+        <div>
+            <label for="root">Primitive Root (G):</label>
+            <input type="number" id="root" min="2">
+        </div>
+        <div>
+            <label for="ram_private_key">Ram's Private Key:</label>
+            <input type="number" id="ram_private_key" min="1">
+        </div>
+        <div>
+            <label for="shyam_private_key">Shyam's Private Key:</label>
+            <input type="number" id="shyam_private_key" min="1">
+        </div>
+       
+        <button onclick="performKeyExchange()">Perform Key Exchange</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function power(a, b, p) {
+            if (b == 1) return a;
+            else return ((Math.pow(a, b)) % p);
+        }
+
+        function performKeyExchange() {
+            var P = parseInt(document.getElementById('prime').value);
+            var G = parseInt(document.getElementById('root').value);
+            var ramPrivateKey = parseInt(document.getElementById('ram_private_key').value);
+            <!-- var shyamPrivateKey = 3 -->
+            var shyamPrivateKey = parseInt(document.getElementById('shyam_private_key').value);
+            // remove upper line and uncomment this line to take input from user
+
+            var ramPublicKey = power(G, ramPrivateKey, P);
+           var shyamPublicKey = power(G, shyamPrivateKey, P);
+
+            var sharedSecretRam = power(shyamPublicKey, ramPrivateKey, P);
+            var sharedSecretShyam = power(ramPublicKey, shyamPrivateKey, P);
+
+            var output = "Ram's Public Key: " + ramPublicKey + "<br>";
+            output += "Shyam's Public Key: " + shyamPublicKey + "<br>";
+            output += "Ram's Shared Secret: " + sharedSecretRam + "<br>";
+            output += "Shyam's Shared Secret: " + sharedSecretShyam;
+            document.getElementById('output').innerHTML = output;
+        }
+    </script>
+</body>
+</html>
